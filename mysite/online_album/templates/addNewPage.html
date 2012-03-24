@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel = "stylesheet" type = "text/css" href = "/static/layout.css" />
+        <script type="text/javascript" src="/static/jquery.js"></script>
+        <script type="text/javascript">
+			$(document).ready(function(){
+				$("#imgAlbumCoverImage").click(function(){
+					$("#uploadAlbumCoverImage").show(1000);
+				});	
+				$("#save").click(function(){
+					image=$("#inputAlbumCoverImage").attr("value");
+					albumName=$("#album_name").val().replace(/(^\s*)|(\s*$)/g, "");
+					albumDesc=$("#album_description").val().replace(/(^\s*)|(\s*$)/g, "");
+					if(image==undefined)
+						alert("Must choose an album cover image:)");
+					else if(albumName=="")
+						alert("Must give an album name :)");
+					else if(albumDesc=="")
+						alert("Must give the album description :)");
+					else{
+						alert(image);
+						alert(albumName);
+						alert(albumDesc);
+						
+						document.forms[0].submit();
+					}
+				});
+			});
+        </script>
+    </head>
+    <body>
+        <div id="header">{%include "header.html"%}</div>     
+        <div id="container">  
+	    <!--left column -->
+            <div id="leftColumn" class="column">
+	        <center><!--curUserID-->
+				<a href="http://127.0.0.1:8000/home/{{curUser.id}}">back to home</a><br/>
+                
+				<img id="imgAlbumCoverImage"src="/static/{{default_pic}}" alt="default_picture" width="130px" height="130px"/><br/>
+                
+                <form id="formCreateNewAlbum" action="/upload/{{albumID}}" method="post" enctype="multipart/form-data">
+					<div id="curUserID" style="display:none">{{curUser.id}}</div>
+					<div id="curUserName"  style="display:none">{{curUser.name}}</div>
+				<div id="uploadAlbumCoverImage" style="display:none">
+					
+						<fieldset>
+						<legend>choose album cover image</legend>
+						<input id="inputAlbumCoverImage" type="file" name="inputAlbumCoverImage" size="10"/>
+						
+						</fieldset>
+					
+                </div>
+			</center>
+		<br/>
+		
+		<label for="album_name">Name:</label>
+		<input type="text" id="album_name" name="album_name" size="15" value="{{albumName}}"/>
+		
+		<br/>
+		<label for="album_description">Description:</label>
+		<textarea id="album_description" name="album_description" cols="30" rows="15" />{{albumDesc}}
+		</textarea>
+		<br/>
+		<div style="float:right;margin-right:40px;">
+			<input type="button" id="save" name="save" value="save"/> &nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="button" id="cancel" name="cancel" value="cancel"/>
+		</div>
+		</form>
+		<br/>
+		<br/>
+
+            </div> 
+            <!--main column -->     
+            <div id="main" class="column">
+				<table style="width:920px;">
+					<tr>
+						<td><img src="/static/layout2.jpg" alt="layout2"/></td>
+						<td><img src="/static/layout3.jpg" alt="layout3"/></td>
+						<td><img src="/static/layout4.jpg" alt="layout4"/></td>
+					</tr>
+					<tr>
+						<td align="center"><input type="radio" id="radioLayout2" name="layout"/></td>
+						<td align="center"><input type="radio" id="radioLayout3" name="layout"/></td>
+						<td align="center"><input type="radio" id="radioLayout4" name="layout"/></td>
+					</tr>
+				</table>
+			</div>
+        </div>
+        <div id="footer1" style="width:1170px;margin:0 auto;height:40px;background-color:#FAE587;overflow:hidden;"><center>copyright@</center></div>
+    </body>
+</html>

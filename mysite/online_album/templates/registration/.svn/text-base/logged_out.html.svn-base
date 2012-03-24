@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Log out{% endblock %}
+{% block header %}<center> LOG OUT </center> {% endblock %}
+
+{% block content %}
+	
+<div class="attrcontainer">
+<div class="attrt"><div class="attrb"><div class="attrl"><div class="attrr">
+<div class="attrtl"><div class="attrtr"><div class="attrbl"><div class="attrbr">
+
+<div class="attrcontent">
+<h3 class="smalltitle"><center>BYE!
+<br /> You logged of the app.<br /><a href="/login" title="Log in">You can enter again</a><br />
+<a href="/" title="Main page">Go to main page</a><br /></center></h3>
+</div>&nbsp;
+</div></div></div></div>
+
+</div></div></div></div>
+</div><br />
+
+
+{% endblock %}
+
+{% block right_box %} {% endblock %} 

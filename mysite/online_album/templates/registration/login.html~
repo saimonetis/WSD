@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="EN" lang="EN" dir="ltr">
+<head profile="http://gmpg.org/xfn/11">
+<title>MyAlbums | Full Width</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="imagetoolbar" content="no" />
+<link rel="stylesheet" href="/statics/styles/layout.css" type="text/css" media="all"/>
+<link rel="shortcut icon" href="http://icons.iconarchive.com/icons/aha-soft/food/256/hamburger-icon.png" />
+<script type="text/javascript" src="/statics/scripts/jquery-1.4.1.min.js"></script>
+<script type="text/javascript" src="/statics/scripts/jquery.slidepanel.setup.js"></script>
+<script type="text/javascript" src="/statics/scripts/jquery.cycle.min.js"></script>
+<script type="text/javascript" src="/statics/scripts/jquery.cycle.setup.js"></script>
+</head>
+<body>
+
+<!-- ####################################################################################################### -->
+<div class="wrapper col1">
+  <div id="header">
+    <div id="logo">
+      <h1><a href="#">MyAlbums</a></h1>
+      <p>Share your albums!</p>
+    </div>
+    <div id="topnav">
+      <ul>
+        <li><a href="/" class="current">Home</a></li>
+	<li><a href="/login">Log in</a></li>
+        <li><a href="/openid-login">Login with Google</a></li>
+        <li class="active"><a href="/logout">Logout</a></li>
+        <li><a href="/register">Register</a></li>
+        <li class="last"><a href="/about">About</a></li>
+      </ul>
+    </div>
+    <br class="clear" />
+  </div>
+</div>
+<!-- ####################################################################################################### -->
+<div class="wrapper col2">
+  <div id="breadcrumb">
+    <ul>
+      <li class="first">You Are Here</li>
+      <li>&#187;</li>
+      <li><a href="#">Login</a></li>
+      <li>&#187;</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ####################################################################################################### -->
+<div class="wrapper col3">
+  <div id="container">
+    <div id="content">
+      <h1>&lt;Login&gt; </h1>
+     <TABLE>
+		<TR>
+		<TD VALIGN='middle' ALIGN='CENTER'>
+			<FORM METHOD="POST" ACTION="{% url django.contrib.auth.views.login %}">
+                {% csrf_token %}
+				<table>
+				<tr>
+					<td>User:   </td>
+					<td>{{ form.username }}</td>
+				</tr>
+				<tr>
+					<td>Password:</td>
+					<td>{{ form.password }}</td>
+				</tr>
+				</table>
+
+				<input type="submit" value="login" />
+				<input type="hidden" name="next" value="{{ next }}" />
+			</form>
+		</TD>
+		</TR>
+	</TABLE>
+      
+      
+    </div>
+    
+
+    <div class="clear"></div>
+  </div>
+</div>
+<!-- ####################################################################################################### -->
+
+<!-- ####################################################################################################### -->
+
+
+</body></html>
+{% block scripts %} 
+<script language="JavaScript" type="text/javascript">
+	function valida(){
+		//valido el name
+		if (document.fvalida.name.value.length==0){
+		   alert("You must write a nickname")
+		   document.fvalida.name.focus()
+		   return false;
+		}else{
+			if(document.fvalida.name.value.length>64){
+				alert("Nickname too long")
+		   		document.fvalida.name.focus()
+		   		return false;
+			}
+		}
+
+		//valido el name público
+		if (document.fvalida.public_name.value.length==0){
+			alert("You must write a public name")
+		   	document.fvalida.name.focus()
+		   	return false;
+		}else{
+			if(document.fvalida.public_name.value.length>64){
+				alert("Public name too long")
+		   		document.fvalida.public_name.focus()
+		   		return false;
+			}
+		}
+		
+		// valido las contraseñas
+
+		if (document.fvalida.passwd1.value.length==0){
+			alert("First password field is empty")
+			document.fvalida.passwd1.focus()
+			return false
+		}
+		if (document.fvalida.passwd2.value.length==0){
+			alert("Check password field is empty")
+			document.fvalida.passwd2.focus()
+			return false
+		}	
+
+		if (document.fvalida.passwd1.value != document.fvalida.passwd2.value){
+			alert("Passwords don't match")
+			document.fvalida.passwd2.focus()
+			return false
+		}
+
+		//valido el interés
+		if (document.fvalida.lang.selectedIndex==0){
+		   alert("You must choose a language")
+		   document.fvalida.lang.focus()
+		   return false;
+		}
+
+		return true;
+} 
+
+
+</script>
+{% endblock %}
+
+{% block header %}<center>
+	{% if mismatch %}
+		<h3><font color="red">Your passwords are different. Try again</font></h3>
+	{% else %}
+		
+	{% endif %}
+</center>
+{% endblock %}

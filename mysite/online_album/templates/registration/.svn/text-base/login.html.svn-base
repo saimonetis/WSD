@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Log in{% endblock %}
+
+{% block header %}
+	<center>
+	{% if form.errors %}
+		<font color="red">Your nickname and/or password are incorrect</font> 
+	{% else %}
+		LOGIN
+	{% endif %}
+	</center>
+{% endblock %}
+
+
+{% block content %}
+	<center>
+	<div id="form">
+	<TABLE>
+		<TR>
+		<TD VALIGN='middle' ALIGN='CENTER'>
+			<FORM METHOD="POST" ACTION="{% url django.contrib.auth.views.login %}">
+			{% csrf_token %} 
+				<table>
+				<tr>
+					<td>User:   </td>
+					<td>{{ form.username }}</td>
+				</tr>
+				<tr>
+					<td>Password:</td>
+					<td>{{ form.password }}</td>
+				</tr>
+				</table>
+
+			<input type="submit" value="login" />
+			<input type="hidden" name="next" value="{{ next }}" />
+			</FORM>
+		</TD>
+		</TR>
+	</TABLE>
+	</div>
+	</center>
+
+{% endblock %}
+
+{% block right_box %} {% endblock %} 
+
+

@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/wsd-project/!svn/ver/5/templates/registration
+END
+logged_out.html
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/wsd-project/!svn/ver/5/templates/registration/logged_out.html
+END
+login.html
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/wsd-project/!svn/ver/5/templates/registration/login.html
+END

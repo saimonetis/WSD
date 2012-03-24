@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel = "stylesheet" type = "text/css" href = "/static/layout.css" />
+         <script type="text/javascript" src="/static/prototype.js"></script>
+        <script type="text/javascript" src="/static/jquery.js"></script>
+        <script type="text/javascript" src="/static/jquery-1.2.6.pack.js"></script>
+        <script type="text/javascript" src="/static/jquery-1.3.1.min.js"></script>
+		<script type="text/javascript" src="/static/jquery.scrollTo.js"></script>
+	   
+        <script type="text/javascript">
+			$(document).ready(function() {
+			$("#confirmLike").click(function(){
+				
+			});
+			$("#confirmMightLike").click(function(){
+				var idList=new Array();
+				$("input[name='cbPersonMayLike']:checked").each(function(index){
+					idList.push($(this).attr("value"));
+					});
+				$.getJSON("/addNewLikePeople/",
+				{
+					"ids":Object.toJSON(idList)
+				},
+				function(data){
+					var idcopy=data['idcopy'];
+					//for(var i=0;i<idcopy.length;i++)
+					//	alert(idcopy[i]);
+				});//$.getJSON
+			});
+			
+			//Click on the 'next' on the 'People You May Like' part to show the next page
+			$("#divAcquaintanceNext").click(function(){
+				var counter=parseInt($("#divAcquaintanceCounter").text());
+				counter=counter+1;
+				$.getJSON("/nextAcquaintance/"+counter+"/",function(data){
+							var idArr=new Array();
+							var nameArr=new Array();
+							var profileArr=new Array();
+							$.each(data,function(key, value){
+									idArr.push(key);
+									nameArr.push(value[0]);
+									profileArr.push(value[1]);
+								});
+								
+							 $("#divPeopleMightLike").html("");
+							 for(var i=0;i<idArr.length;i++)
+							 {
+								  var elements="<div style='border:1px solid green;position:relative' name='divPersonMayLike'>";
+								      elements+="<table><tr>";
+									  elements+="<td><img src='/static/"+profileArr[i]+"' name='imgAcquaintanceProfile' style='height:50px;width:50px;' /></td>";
+									  elements+="<td width='110px;'><font size='2' name='fontAcquaintanceName'>"+nameArr[i]+"</font></td>"	
+									  elements+="<td><input type='checkbox' name='cbPersonMayLike' value='"+idArr[i]+"'/>"	
+									  elements+="<font size='2'>dislike</font></td>"	
+									  elements+="</tr></table></div>";		
+								  $("#divPeopleMightLike").append(elements);
+							 }    
+							 if(idArr.length>0)
+							 {
+								$("#divAcquaintanceCounter").text(counter);
+						     }
+					  });//getJSON done
+			});//divAcquaintanceNext
+			
+			//Click on the 'prev' on the 'People You May Like' part to show the previous page
+			$("#divAcquaintancePrev").click(function(){
+				var counter=parseInt($("#divAcquaintanceCounter").text());
+				if(counter==1)
+					return;
+				counter=counter-1;
+				$.getJSON("/prevAcquaintance/"+counter+"/",function(data){
+							var idArr=new Array();
+							var nameArr=new Array();
+							var profileArr=new Array();
+							$.each(data,function(key, value){
+									idArr.push(key);
+									nameArr.push(value[0]);
+									profileArr.push(value[1]);
+								});
+								
+							 $("#divPeopleMightLike").html("");
+							 for(var i=0;i<idArr.length;i++)
+							 {
+								  var elements="<div style='border:1px solid green;position:relative' name='divPersonMayLike'>";
+								      elements+="<table><tr>";
+									  elements+="<td><img src='/static/"+profileArr[i]+"' name='imgAcquaintanceProfile' style='height:50px;width:50px;' /></td>";
+									  elements+="<td width='110px;'><font size='2' name='fontAcquaintanceName'>"+nameArr[i]+"</font></td>"	
+									  elements+="<td><input type='checkbox' name='cbPersonMayLike' value='"+idArr[i]+"'/>"	
+									  elements+="<font size='2'>dislike</font></td>"	
+									  elements+="</tr></table></div>";		
+								  $("#divPeopleMightLike").append(elements);
+							 }    
+							 if(idArr.length>0)
+							 {
+								$("#divAcquaintanceCounter").text(counter);
+						     }
+					  });//getJSON done
+			});//divAcquaintancePrev
+			
+			//Click on the 'prev' on the 'People You Like' part to show the previous page
+			$("#divPrev").click(function(){
+				var counter=parseInt($("#divFriendCounter").text());
+				if(counter==1)
+					return;
+				counter=counter-1;
+					$.getJSON("/prevFriend/"+counter+"/",function(data){
+							var idArr=new Array();
+							var nameArr=new Array();
+							var profileArr=new Array();
+							$.each(data,function(key, value){
+									idArr.push(key);
+									nameArr.push(value[0]);
+									profileArr.push(value[1]);
+								});
+								
+							 $("#divPeopleLiked").html("");
+							 for(var i=0;i<idArr.length;i++)
+							 {
+								  var elements="<div style='border:1px solid green;position:relative' name='divPersonLike'>";
+								      elements+="<table><tr>";
+									  elements+="<td><img src='/static/"+profileArr[i]+"' name='imgFriendProfile' style='height:50px;width:50px;' /></td>";
+									  elements+="<td width='110px;'><font size='2' name='fontFriendName'>"+nameArr[i]+"</font></td>"	
+									  elements+="<td><input type='checkbox' name='cbFriendLike' value='"+idArr[i]+"'/>"	
+									  elements+="<font size='2'>dislike</font></td>"	
+									  elements+="</tr></table></div>";		
+								  $("#divPeopleLiked").append(elements);
+							 }    
+							 if(idArr.length>0)
+							 {
+								$("#divFriendCounter").text(counter);
+						     }
+					  });//getJSON done
+						});
+			//Click on the 'next' on the 'People You Like' part to show the next page			
+			$("#divNext").click(function(){
+				var counter=parseInt($("#divFriendCounter").text());
+				counter=counter+1;
+					$.getJSON("/nextFriend/"+counter+"/",function(data){
+							var idArr=new Array();
+							var nameArr=new Array();
+							var profileArr=new Array();
+							$.each(data,function(key, value){
+									idArr.push(key);
+									nameArr.push(value[0]);
+									profileArr.push(value[1]);
+								});
+							$("#divPeopleLiked").html("");
+							for(var i=0;i<idArr.length;i++)
+							{
+								  var elements="<div style='border:1px solid green;position:relative' name='divPersonLike'>";
+								      elements+="<table><tr>";
+									  elements+="<td><img src='/static/"+profileArr[i]+"' name='imgFriendProfile' style='height:50px;width:50px;' /></td>";
+									  elements+="<td width='110px;'><font size='2' name='fontFriendName'>"+nameArr[i]+"</font></td>"	
+									  elements+="<td><input type='checkbox' name='cbFriendLike' value='"+idArr[i]+"'/>"	
+									  elements+="<font size='2'>dislike</font></td>"	
+									  elements+="</tr></table></div>";		
+								  $("#divPeopleLiked").append(elements);
+							}    
+							if(idArr.length>0)
+							{
+								$("#divFriendCounter").text(counter);
+						    }
+					 });//getJSON done	
+			});
+			//Click on the confirm button on the navigation part, user is redirected to addNewpage page
+			$("#btnConfirm").click(
+				function(){
+					var albumID=$("input[@name=albums][@checked]").attr("id");
+					var curUserID=$("#curUserID").text();
+					window.location.href="http://127.0.0.1:8000/addNewPage/"+curUserID+"/"+albumID+"/";
+				}
+			);
+				
+            $("ul li[id=liUploadPictures]").click(function() {
+                $("#divAblumList").show(1000);
+                
+            });
+            
+            $("#btnCancel").click(function() {
+                $("#divAblumList").hide(1000);
+            });
+            
+            $(".albums > li >div> a").each(function(){
+				$(this).find("div").hover(
+				function(){
+					
+					$(this).find("img").animate({
+						width: 200,
+						height: 150,
+						padding: 5,
+						left: -50,
+						top: -38
+					},200).addClass("hover");
+				},function(){
+					$(this).find("img").animate({
+						width: 100,
+						height: 75,
+						padding: 3,
+						left: 0,
+						top: 0
+					},200).removeClass("hover");	
+				}
+				);//div.hover	
+			
+				$(this).click(function(){//"this" refers to "a"
+					//add the style of current chosen picture
+					$(".albums > li > a > img").removeClass("on");
+					$(this).find("img").addClass("on");
+					return true;
+				}).hover(function(){
+					$(this).css("z-index",1);
+			
+				},function(){
+					$(this).css("z-index",0);
+			
+				});
+		});//$(".albums > li > a").each(function()
+        	$('a.panel').click(function(){
+			current=$(this);
+			hrefVal=current.attr('href');
+			pageNum=hrefVal.substring(5);		
+			$('#divPeopleLiked').scrollTo(hrefVal, 800);
+			return false;
+		});
+		$('a.acqpanel').click(function(){
+			
+			current=$(this);
+			hrefVal=current.attr('href');
+			pageNum=hrefVal.substring(5);
+			//alert("href:"+hrefVal);
+			$('#divPeopleMightLike').scrollTo(hrefVal.substring(1), 800);
+			return false;
+		});
+        });//$(document).ready(function()
+        </script>
+    </head>
+    <body>
+        <div id="header">{%include "header.html"%}</div>     
+        <div id="container">  
+	    <!--left column -->
+            <div id="leftColumn" class="column">
+	         <div id="divFunctionList">
+				<center><img src="/static/{{curUser.profile}}" width="100px;" height="100px;" style="margin:0 auto"/></center>
+				<ul style="list-style-type:square;margin-left:20px">
+				
+				<li id="liListAllAlbums">list all albums</li>
+				<!--mysql database stores records with id starting from 1,so in the below <a>, the first argument in url,0, indicates to create a new album of current user-->
+				<li id="liCreateNewAblum"><a href="http://127.0.0.1:8000/createNewAblum/{{curUser.id}}" style="text-decoration:none">create new albums</a></li>
+				<li id="liUploadPictures">upload pictures</li>
+				</ul> 
+	         </div>
+	         <div id="divAblumList" style="display:none;margin-left:20px;">
+				<table><!-- -->
+					<!--<tr><td>create new album</td><td align="center"><input type="radio" id="" name="albums"/></td></tr>-->
+					{%if curUser.albums%}
+						{% for key, value in curUser.albums.items%}
+							<tr><td>{{value}}</td><td align="center"><input type="radio" id="{{key}}" name="albums"/></td></tr>
+						{%endfor%}
+					
+					{%endif%}
+					<tr><td  align="right"><input type="button" id="btnConfirm" value="confirm"/></td><td><input type="button" id="btnCancel" value="cancel"/></td></tr>
+				</table>
+	         </div>
+	         <div id="curUserID" style="display:none">{{curUser.id}}</div><!--this div contains current user's id in auth_user-->
+            </div> 
+            <!--main column -->     
+            <div id="main" class="column" style="">
+				{%if friends%}
+						{%for friend in friends%}
+							<div id="{{friend.id}}" style="background-color:#FFE87D;margin-top:5px;">
+									<table>
+										<tr>
+											<td width="110px;"><img src="/static/{{friend.profile}}" id="img{{value.id}}" style="height:75px;width:75px;" /></td>
+											<td>
+											<table>
+												<tr>
+													<td style="">prev</td>
+													<td style="" align="center">
+														<!--{{friend.albums.items}}-->
+												<ul class="albums">
+													{%for key, value in friend.albums.items%}
+														<li>
+															<div><!--in below <a>, key indicates the album_id, curUse.id inidicates current user's id-->
+															<a href="http://127.0.0.1:8000/showAlbumPage/{{key}}/{{curUser.id}}" id="{{key}}" style="">
+																<div style="border:1px solid red">
+																<img src="/static/{{value}}" id="img{{key}}" style="height:75px;width:100px;" />
+																</div>
+															</a>
+															</div>
+														</li>
+													{%endfor%}
+												</ul>
+													</td>
+												   <td style="">next</td>
+												</tr>
+											</table>	
+											</td>
+										</tr>
+								        <tr><td colspan="2"><font size="2">{{friend.name}}</font></td></tr>
+									</table>
+							</div>
+						{%endfor%}
+					{%endif%}
+			</div>
+           <!--right column -->
+            <div id="rightColumn" class="column">
+				People you like:<br/>
+                <div id="divPeopleLiked">
+					{%if friends%} 
+					<div id="mask" style="height:100%;">
+					
+						{%for friend in friends%}
+							<script type="text/javascript">
+								numOfFriends={{ friends|length }};
+								len={% widthratio friends|length 4 1 %};
+								if(len*4<numOfFriends){
+									len=len+1;
+								}
+								document.getElementById("mask").style.width=""+1*len*100+"%";
+								counterOfFriends={{forloop.counter}};
+								var pageNum=0;
+								if(counterOfFriends%4==1){
+									pageNum=0;
+									if(counterOfFriends==numOfFriends)
+										pageNum=len;
+									else{
+										pageNum=Math.floor((counterOfFriends-1)/4)+1;
+									}
+									document.write("<div id='item"+pageNum+"' class='item'><a name='item"+pageNum+"' class='panel'></a><div class='content'>");
+								}
+								
+								items=document.getElementsByClassName("item");
+								for(var i=0;i<items.length;i++){
+									items[0].style.width=""+(1/len*100)+"%";
+								}
+							</script>
+							<div style="position:relative;margin-top:2.5px;margin-bottom:2.5px;background-color:#FAEFBB" name="divPersonLike">
+								<table>
+									<tr>
+										<td><img src="/static/{{friend.profile}}" name="imgFriendProfile" style="height:50px;width:50px;" /></td>
+										<td width="110px;"><font size="2" name="fontFriendName">{{friend.name}}</font></td>
+										<td><input type="checkbox" name="cbFriendLike" value="{{friend.id}}"/>
+											<font size="2">dislike</font></td>
+									</tr>
+								</table>
+							</div>
+							<script type="text/javascript">
+									numOfFriends={{ friends|length }};
+									len={% widthratio friends|length 4 1 %};
+									if(len*4<numOfFriends){
+										len=len+1;
+									}
+									counterOfFriends={{forloop.counter}};
+									if(counterOfFriends%4==0||counterOfFriends==numOfFriends){//start....
+									var pageNum=0;
+									if(counterOfFriends%4==0)
+										pageNum=Math.floor(counterOfFriends/4);
+									else{
+										pageNum=Math.floor(counterOfFriends/4)+1;
+									}
+									var previous=0, next=0;
+									if(len==1){
+										previous=len;
+										next=len;
+									}
+									else if(pageNum==1){
+										previous=len;
+										next=pageNum+1;
+									}
+									else if(pageNum==len){
+										previous=pageNum-1;
+										next=1;
+									}
+									else{
+										previous=pageNum-1;
+										next=pageNum+1;
+									}
+									document.write("</div>"+
+									"<div style='float:right;'>"+
+										"<table>"+
+											"<tr>"+
+												"<td>"+
+													"<div id='divFriendCounter"+pageNum+"' style='display:none'>1</div>"+
+														"<a name='aPrev' href='#item"+previous+"' class='panel'><font size='2'>prev</font></a>|"+
+														"<a name='aNext' href='#item"+next+"' class='panel'><font size='2'>next</font></a></div>"+
+												"</td>"+
+											"</tr>"+
+										"</table>"+
+									"</div>"+
+									"</div>");
+									}//end of if(counterOfFriends==4||counterOfFriends==5){//start....
+							</script>
+						{%endfor%}	
+						</div><!--mask-->
+					{%endif%}
+                </div><!--divPeopleLiked-->
+                <!--<div id="confirmLike" style="float:right"><font size="2">confirm</font></div>-->
+                <br/>
+                <br/>
+                People you may like:<br/>
+                <div id="divPeopleMightLike">
+					{%if acquaintances%}
+					<div id="maskAcq"  style="height:100%;">
+						{%for key, value in acquaintances.items%}
+						<script type="text/javascript">
+								numOfFriends={{ acquaintances.items|length }};
+								len={% widthratio acquaintances.items|length 4 1 %};
+								if(len*4<numOfFriends){
+									len=len+1;
+								}
+								document.getElementById("maskAcq").style.width=""+1*len*100+"%";
+								counterOfFriends={{forloop.counter}};
+								var pageNum=0;
+								if(counterOfFriends%4==1){
+									pageNum=0;
+									if(counterOfFriends==numOfFriends)
+										pageNum=len;
+									else{
+										pageNum=Math.floor((counterOfFriends-1)/4)+1;
+									}
+									document.write("<div id='itemacq"+pageNum+"' class='item'><a name='itemacq"+pageNum+"' class='acqpanel'></a><div class='content'>");
+								}
+								
+								items=document.getElementsByClassName("itemacq");
+								for(var i=0;i<items.length;i++){
+									items[0].style.width=""+(1/len*100)+"%";
+								}
+						</script>
+							<div style="position:relative;margin-top:5px;background-color:#FAEFBB;width:100%" name="divPersonMayLike">
+								<table >
+									<tr>
+										<td><img src="/static/{{value.1}}" name="imgAcquaintanceProfile" style="height:50px;width:50px;" /></td>
+										<td width="110px;"><font size="2" name="fontAcquaintanceName">{{value.0}}</font></td>
+										<td><input type="checkbox" name="cbPersonMayLike" value="{{key}}"/>
+											<font size="2">dislike</font></td>
+									</tr>
+								</table>
+							</div>	
+							<script type="text/javascript">
+									//numOfFriends={{ friends|length }};
+									numOfFriends={{ acquaintances.items|length }};
+									len={% widthratio friends|length 4 1 %};
+									if(len*4<numOfFriends){
+										len=len+1;
+									}
+									counterOfFriends={{forloop.counter}};
+									if(counterOfFriends%4==0||counterOfFriends==numOfFriends){//start....
+									var pageNum=0;
+									if(counterOfFriends%4==0)
+										pageNum=Math.floor(counterOfFriends/4);
+									else{
+										pageNum=Math.floor(counterOfFriends/4)+1;
+									}
+									var previous=0, next=0;
+									if(len==1){
+										previous=len;
+										next=len;
+									}
+									else if(pageNum==1){
+										previous=len;
+										next=pageNum+1;
+									}
+									else if(pageNum==len){
+										previous=pageNum-1;
+										next=1;
+									}
+									else{
+										previous=pageNum-1;
+										next=pageNum+1;
+									}
+									document.write("</div>"+
+									"<div style='float:right;'>"+
+										"<table>"+
+											"<tr>"+
+												"<td>"+
+													"<div id='divAcqCounter"+pageNum+"' style='display:none'>1</div>"+
+														"<a name='aAcqPrev' href='#itemacq"+previous+"' class='acqpanel'><font size='2'>prev</font></a>|"+
+														"<a name='aAcqNext' href='#itemacq"+next+"' class='acqpanel'><font size='2'>next</font></a></div>"+
+												"</td>"+
+											"</tr>"+
+										"</table>"+
+									"</div>"+
+									"</div>");
+									}//end of if(counterOfFriends==4||counterOfFriends==5){//start....
+							</script>
+						{%endfor%}
+						</div><!--maskAcq-->
+					{%endif%}                                
+				</div><!--maskacq-->
+				<!--<div id="confirmMightLike" style="float:right"><font size="2">confirm</font></div>-->
+            </div> <!--divPeopleMightLike -->
+        </div><!-- rightcolumn-->
+        <!--<div id="footer"><center>copyright@</center></div>-->
+    </body>
+</html>

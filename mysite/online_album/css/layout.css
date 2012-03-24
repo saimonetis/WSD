@@ -1,0 +1,21 @@
+*{margin:0;padding:0;/*font-size:1em*/}
+#header {width:1170px;height:auto;margin:0 auto;background:#FAE587;}
+#container{width:1170px;margin:0 auto;}
+#footer{width:1170px;margin:0 auto;height:40px;background-color:#FAE587;overflow: hidden;}
+#leftColumn{width:250px;float:left;background-color: #FAEFBB;}
+#main{width:670px;float:left;margin-left:0;background-color: #FCEEAC;}
+#rightColumn{width:250px;float:right;}
+body{background-color:#FCEEAC;}
+.albums{width:450px;list-style-type:none;border=1px;}
+.albums li{float:left;width:100px;padding:5px;}/*if width attribute is not added, all images collapse together*/
+.albums li a{display:block; height:75px; position:relative; outline:none;}
+.albums li img{width:100px; height:75px; position:absolute; left:0; top:0; padding:1px; background:#eeeeee; border:1px solid #cccccc;}
+.albums li img.on{background:#beceeb; border:1px solid #828da1;}
+.albums li img.hover{padding:5px;border:none;}
+.curUser, .logout{text-decoration:none;}
+#divPeopleLiked,#divPeopleMightLike{width:100%;height:300px;position:relative;top:0;left:0;overflow:hidden;}
+.item,.itemacq{float:left;height:100%;}
+.content{width:250px;height:90%;margin:0 auto;position:relative;}
+a,a:hover,a:active{text-decoration:none;color:black;}
+
+
